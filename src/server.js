@@ -24,6 +24,7 @@ fastify.register(swaggerUI, {
 fastify.register(fastifyJWT, { secret: process.env.JWT_SECRET });
 
 fastify.register(require("./routes/userRoutes"), { prefix: "/api/v1/user" });
+fastify.register(require("./routes/taskRoutes"), { prefix: "/api/v1/task" });
 
 // Register the global error handler
 fastify.setErrorHandler(globalErrorHandler);
