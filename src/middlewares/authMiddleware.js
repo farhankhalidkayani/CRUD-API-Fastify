@@ -5,3 +5,5 @@ const verifyJWT = async (request, reply) => {
     reply.code(401).send({ message: "Unauthorized" });
   }
 };
+
+module.exports = verifyJWT;

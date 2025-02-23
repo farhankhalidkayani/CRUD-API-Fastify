@@ -15,5 +15,29 @@ class UserService {
     const result = await UserRepository.getUserByEmail(email);
     return result ? true : false;
   };
+
+  static login = async (data, fastify) => {
+    const user = await UserRepository.getUserByEmail(data.email);
+    if (!user) {
+      throw new Error("Invalid email");
+    }
+    const validPassword = await PasswordUtils.comparePasswords(
+      data.password,
+      user.password
+    );
+    if (!validPassword) {
+      throw new Error("Invalid password");
+    }
+    user.token = generateToken(fastify, user);
+    return user;
+  };
+
+  static getUser = async (email) => {
+    const user = await UserRepository.getUserByEmail(email);
+    if (!user) {
+      throw new Error("User not found");
+    }
+    return user;
+  };
 }
 module.exports = UserService;
